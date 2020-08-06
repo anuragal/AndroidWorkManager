@@ -38,9 +38,9 @@ class SaveImageToFileWorker(ctx: Context, params: WorkerParameters) : Worker(ctx
             val imageUrl = MediaStore.Images.Media.insertImage(
                     resolver, bitmap, Title, dateFormatter.format(Date()))
             if (!imageUrl.isNullOrEmpty()) {
-                val outputData = workDataOf(KEY_IMAGE_URI to imageUrl)
+                val outputData = workDataOf(KEY_IMAGE_URI to resourceUri)
 
-                Timber.e("Saved file to location - $imageUrl")
+                Timber.e("Saved file to location - $resourceUri")
                 Result.success(outputData)
             } else {
                 Timber.e("Writing to MediaStore failed")

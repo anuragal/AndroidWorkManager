@@ -42,6 +42,7 @@ class BlurWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
 
             val outputData = workDataOf(KEY_IMAGE_URI to outputUri.toString())
 
+            Timber.e("Saved file to location - $outputData")
             Result.success(outputData)
         } catch (throwable: Throwable) {
             Timber.e(throwable)

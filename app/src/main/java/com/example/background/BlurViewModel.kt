@@ -80,10 +80,10 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
 
         continuation = continuation.then(save)
 
-        val zipFiles = OneTimeWorkRequest.Builder(CompressWorker::class.java)
-                .build()
+        //val zipFiles = OneTimeWorkRequest.Builder(CompressWorker::class.java)
+        //        .build()
 
-        continuation = continuation.then(zipFiles)
+        //continuation = continuation.then(zipFiles)
 
         val uploadZip = OneTimeWorkRequest.Builder(UpLoadFileWorker::class.java)
                 .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build())
