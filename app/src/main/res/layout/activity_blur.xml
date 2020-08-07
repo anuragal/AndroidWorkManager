@@ -35,34 +35,6 @@
             android:contentDescription="@string/description_image"
             android:scaleType="fitCenter" />
 
-        <TextView
-            android:id="@+id/filters_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/blur_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/radio_blur_group"
-            android:checkedButton="@+id/radio_blur_lv_1">
-            <RadioButton android:id="@+id/radio_blur_lv_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/blur_lv_1" />
-            <RadioButton android:id="@+id/radio_blur_lv_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/blur_lv_2" />
-            <RadioButton android:id="@+id/radio_blur_lv_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/blur_lv_3" />
-        </RadioGroup>
-
         <RadioGroup
             android:id="@+id/destinations"
             android:layout_width="wrap_content"
@@ -82,22 +54,23 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:progress="0"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal"
+                    />
+
                 <Button
                     android:id="@+id/cancel_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cancel_work"
                     android:visibility="gone"
-                    />
-
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:visibility="gone"
-                    android:layout_gravity="center_horizontal"
                     />
             </LinearLayout>
 

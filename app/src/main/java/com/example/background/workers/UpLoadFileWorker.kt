@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.Uri
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import androidx.work.workDataOf
 import com.example.background.KEY_IMAGE_URI
+import com.example.background.PROGRESS
 
 import timber.log.Timber
 
@@ -16,6 +18,10 @@ class UpLoadFileWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, par
 
         // Sleep for debugging purposes
         sleep()
+        (0..100 step 10).forEach {
+            setProgressAsync(workDataOf(PROGRESS to it))
+            sleep()
+        }
 
         return try {
 

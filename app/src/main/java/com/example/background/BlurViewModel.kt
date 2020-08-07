@@ -37,19 +37,20 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
 
     // New instance variable for the WorkInfo
     internal val outputWorkInfos: LiveData<List<WorkInfo>>
+    internal val progressWorkInfoItems: LiveData<List<WorkInfo>>
 
     // Add an init block to the BlurViewModel class
     init {
         // This transformation makes sure that whenever the current work Id changes the WorkInfo
         // the UI is listening to changes
         outputWorkInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
+        progressWorkInfoItems = workManager.getWorkInfosByTagLiveData(TAG_PROGRESS)
     }
 
     /**
      * Create the WorkRequest to apply the blur and save the resulting image
-     * @param blurLevel The amount to blur the image
      */
-    internal fun applyBlur(blurLevel: Int) {
+    internal fun applyBlur() {
         // Add WorkRequest to Cleanup temporary images
         var continuation = workManager
                 .beginUniqueWork(
@@ -59,23 +60,20 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
                 )
 
         // Add WorkRequests to blur the image the number of times requested
-        for (i in 0 until blurLevel) {
-            val blurBuilder = OneTimeWorkRequestBuilder<BlurWorker>()
+        val blurBuilder = OneTimeWorkRequestBuilder<BlurWorker>()
+                .setInputData(createInputDataForUri())
+                .addTag(TAG_OUTPUT)
+                .addTag(TAG_PROGRESS)
+                .build()
 
-            // Input the Uri if this is the first blur operation
-            // After the first blur operation the input will be the output of previous
-            // blur operations.
-            if (i == 0) {
-                blurBuilder.setInputData(createInputDataForUri())
-            }
+        continuation = continuation.then(blurBuilder)
 
-            continuation = continuation.then(blurBuilder.build())
-        }
 
         // Add WorkRequest to save the image to the filesystem
         val save = OneTimeWorkRequestBuilder<SaveImageToFileWorker>()
                 .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
                 .addTag(TAG_OUTPUT)
+                .addTag(TAG_PROGRESS)
                 .build()
 
         continuation = continuation.then(save)
@@ -88,6 +86,7 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
         val uploadZip = OneTimeWorkRequest.Builder(UpLoadFileWorker::class.java)
                 .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build())
                 .addTag(TAG_OUTPUT)
+                .addTag(TAG_PROGRESS)
                 .build()
 
         continuation = continuation.then(uploadZip)

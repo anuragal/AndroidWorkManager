@@ -8,6 +8,7 @@ import androidx.work.workDataOf
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.background.KEY_IMAGE_URI
+import com.example.background.PROGRESS
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -29,6 +30,11 @@ class SaveImageToFileWorker(ctx: Context, params: WorkerParameters) : Worker(ctx
         // it's easier to see each WorkRequest start, even on emulated devices
         makeStatusNotification("Saving image", applicationContext)
         sleep()
+
+        (0..100 step 10).forEach {
+            setProgressAsync(workDataOf(PROGRESS to it))
+            sleep()
+        }
 
         val resolver = applicationContext.contentResolver
         return try {
