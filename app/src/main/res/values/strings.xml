@@ -19,6 +19,7 @@
 
     <!-- Buttons -->
     <string name="select_image">Select Image</string>
+    <string name="save">Save</string>
     <string name="go">Sync To Server</string>
     <string name="see_file">See File</string>
 
@@ -26,7 +27,7 @@
     <string name="description_image">The image to save and sync.</string>
 
     <!-- Blur levels -->
-    <string name="cancel_work">Cancel Sync</string>
+    <string name="cancel_work">Cancel</string>
 
     <!-- Messages -->
     <string name="set_permissions_in_settings">Go to Settings -> Apps and Notifications ->

@@ -47,6 +47,7 @@ class SaveImageToFileWorker(ctx: Context, params: WorkerParameters) : Worker(ctx
                 val outputData = workDataOf(KEY_IMAGE_URI to resourceUri)
 
                 Timber.e("Saved file to location - $resourceUri")
+
                 Result.success(outputData)
             } else {
                 Timber.e("Writing to MediaStore failed")

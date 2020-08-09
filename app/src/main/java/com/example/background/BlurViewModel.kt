@@ -50,7 +50,7 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
     /**
      * Create the WorkRequest to apply the blur and save the resulting image
      */
-    internal fun applyBlur() {
+    internal fun saveImage() {
         // Add WorkRequest to Cleanup temporary images
         var continuation = workManager
                 .beginUniqueWork(
@@ -79,17 +79,39 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
         continuation = continuation.then(save)
 
         //val zipFiles = OneTimeWorkRequest.Builder(CompressWorker::class.java)
+        //        .addTag(TAG_OUTPUT)
+        //        .addTag(TAG_PROGRESS)
         //        .build()
 
-        //continuation = continuation.then(zipFiles)
+        // continuation = continuation.then(zipFiles)
 
-        val uploadZip = OneTimeWorkRequest.Builder(UpLoadFileWorker::class.java)
-                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build())
-                .addTag(TAG_OUTPUT)
-                .addTag(TAG_PROGRESS)
-                .build()
+        // Actually start the work
+        continuation.enqueue()
+    }
 
-        continuation = continuation.then(uploadZip)
+    /**
+     * Create the WorkRequest to apply the blur and save the resulting image
+     */
+    internal fun syncImage() {
+
+        val outputuriBuilder = Data.Builder()
+        outputUri?.let {
+            outputuriBuilder.putString(KEY_IMAGE_URI, outputUri.toString())
+        }
+        val outputUriDatadata = outputuriBuilder.build()
+
+        // Add WorkRequest to Cleanup temporary images
+        val continuation = workManager
+                .beginUniqueWork(
+                        IMAGE_MANIPULATION_WORK_NAME,
+                        ExistingWorkPolicy.REPLACE,
+                        OneTimeWorkRequest.Builder(UpLoadFileWorker::class.java)
+                                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.UNMETERED).build())
+                                .setInputData(outputUriDatadata)
+                                .addTag(TAG_OUTPUT)
+                                .addTag(TAG_PROGRESS)
+                                .build()
+                )
 
         // Actually start the work
         continuation.enqueue()

@@ -47,7 +47,9 @@ class BlurActivity : AppCompatActivity() {
             Glide.with(this).load(imageUri).into(binding.imageView)
         }
 
-        binding.goButton.setOnClickListener { viewModel.applyBlur() }
+        binding .saveButton.setOnClickListener { viewModel.saveImage() }
+
+        binding.goButton.setOnClickListener { viewModel.syncImage() }
 
         binding.seeFileButton.setOnClickListener {
             viewModel.outputUri?.let { currentUri ->
@@ -73,6 +75,7 @@ class BlurActivity : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
             cancelButton.visibility = View.VISIBLE
             goButton.visibility = View.GONE
+            saveButton.visibility = View.GONE
             seeFileButton.visibility = View.GONE
         }
     }
@@ -85,6 +88,8 @@ class BlurActivity : AppCompatActivity() {
             progressBar.visibility = View.GONE
             cancelButton.visibility = View.GONE
             goButton.visibility = View.VISIBLE
+            saveButton.visibility = View.VISIBLE
+            seeFileButton.visibility = View.GONE
             progressBar.progress = 0
         }
     }
@@ -116,7 +121,7 @@ class BlurActivity : AppCompatActivity() {
                 // If there is an output file show "See File" button
                 if (!outputImageUri.isNullOrEmpty()) {
                     viewModel.setOutputUri(outputImageUri as String)
-                    binding.seeFileButton.visibility = View.VISIBLE
+                    //binding.seeFileButton.visibility = View.VISIBLE
                 }
             } else {
                 showWorkInProgress()

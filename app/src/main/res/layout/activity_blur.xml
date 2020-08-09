@@ -30,18 +30,10 @@
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="50dp"
             android:layout_weight="1"
-            android:contentDescription="@string/description_image"
-            android:scaleType="fitCenter" />
+            android:contentDescription="@string/description_image" />
 
-        <RadioGroup
-            android:id="@+id/destinations"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,6 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
@@ -66,6 +59,20 @@
                     />
 
                 <Button
+                    android:id="@+id/save_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    />
+
+                <Button
+                    android:id="@+id/go_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/go"
+                    />
+
+                <Button
                     android:id="@+id/cancel_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -74,12 +81,6 @@
                     />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/go_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/go"
-                />
 
             <Button
                 android:id="@+id/see_file_button"
